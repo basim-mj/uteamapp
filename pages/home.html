@@ -1,0 +1,35 @@
+<html>
+    <head>
+        <title>UTeamApp</title>
+        <link rel="stylesheet" type="text/css" href="../assets/css/bulma.css">
+    </head>
+    <body>
+        <div id="app">
+            <div class="columns">
+                <div class="column" v-for="av in avatarList">
+                    <a @click="setAvatar(av)"><img :src="'../assets/avatars/' + av" alt=""></a>
+                </div>
+            </div>
+            <div class="columns">
+                <div class="column is-two-thirds">
+                    <div class="field">
+                        <label class="label">Display Name</label>
+                        <div class="control">
+                            <input class="input" v-model="displayName">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="label">Default Email</label>
+                        <div class="control">
+                            <input class="input" v-model="defaultEmail">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <button class="button" :class="saveMessageClass" @click="save">{{saveMessage}}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+    <script src="home.js"></script>
+</html>

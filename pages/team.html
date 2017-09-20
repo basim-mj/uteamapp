@@ -1,0 +1,156 @@
+<html>
+
+<head>
+    <title>UTeam App</title>
+    <link rel="stylesheet" type="text/css" href="../assets/css/bulma.css">
+</head>
+
+<body>
+    <div id="app">
+        <div v-if="auth == false">
+            <div class="columns">
+                <div class="column is-half">
+                    <div class="field">
+                        <label class="label">Email</label>
+                        <input v-model="userEmail" class="input">
+                    </div>
+                </div>
+                <div class="column is-half">
+                    <div class="field">
+                        <label class="label">Password</label>
+                        <input type="password" v-model="userPassword" class="input">
+                    </div>
+                </div>
+            </div>
+            <div class="columns">
+                <div class="column is-half">
+                    <div class="control">
+                        <button class="button is-primary" v-if="authAction" @click="login">Login</button>
+                        <button v-if="allowSignup && authAction" @click="signup" class="button is-primary">Signup</button>
+                    </div>
+                </div>
+                <div class="column is-half">{{authResult}}</div>
+            </div>
+        </div>
+        <div class="columns" v-if="auth">
+            <div class="column is-three-quarters">
+                <div class="tabs is-boxed">
+                    <ul>
+                        <li :class="{'is-active' : mode == 0}">
+                            <a @click="mode = 0">
+                                        <span class="icon is-small">
+                                        <i class="fa fa-image"></i>
+                                        </span>
+                                        <span>Chat</span>
+                                    </a>
+                        </li>
+                        <li v-if="useStorage" :class="{'is-active' : mode == 1}">
+                            <a @click="mode = 1">
+                                        <span class="icon is-small">
+                                        <i class="fa fa-music"></i>
+                                        </span>
+                                        <span>Files</span>
+                                    </a>
+                        </li>
+                        <li v-if="useStorage" :class="{'is-active' : mode == 2}">
+                            <a @click="mode = 2">
+                                        <span class="icon is-small">
+                                        <i class="fa fa-music"></i>
+                                        </span>
+                                        <span>Upload</span>
+                                    </a>
+                        </li>
+                        <li v-if="useStorage" :class="{'is-active' : mode == 3}">
+                            <a @click="mode = 3">
+                                        <span class="icon is-small">
+                                        <i class="fa fa-music"></i>
+                                        </span>
+                                        <span>Settings</span>
+                                    </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="columns" v-if="auth">
+            <div class="column is-three-quarters" v-if="mode == 0">
+                <div class="field">
+                    <input type="text" class="input" placeholder="press enter to send" v-model="message" v-on:keyup.enter="send">
+                </div>
+                <div class="card" v-for="chat in chats">
+                    <div class="card-content">
+                        <div class="media">
+                            <div class="media-left">
+                                <figure class="image is-64x64">
+                                    <img :src="'../assets/avatars/' + chat.avatar" alt="Image">
+                                </figure>
+                            </div>
+                            <div class="media-content">
+                                <p class="title is-4">{{chat.displayName}}</p>
+                            </div>
+                        </div>
+
+                        <div class="content">
+                            {{chat.message}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="column is-three-quarters" v-if="mode == 1 && useStorage">
+                <div class="card" v-for="(file,index) in files">
+                    <div class="card-content">
+                        <div class="content">
+                            {{file.name}}
+                            <button class="button" :class="file.class" v-if="file.downloading == false" @click="download(file,index)">Download</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="column is-three-quarters" v-if="mode == 2 && useStorage">
+                <div class="file has-name">
+                    <label class="file-label">
+                        <input class="file-input" type="file" @change="upload" :accept="storageFileList" multiple>
+                        <span class="file-cta">
+                            <span class="file-icon">
+                                <i class="fa fa-upload"></i>
+                            </span>
+                            <span class="file-label">
+                                Upload File's
+                            </span>
+                        </span>
+                    </label>
+                </div>
+                <hr class="hr_clear">
+                <button class="button is-danger" @click="clearUploadLogs">Clear Logs</button>
+                <hr class="hr_clear">
+                <div v-for="up in uploadLogs">
+                    {{up.name}}
+                    <progress class="progress is-success" :value="up.progress" max="100" :class="up.class">{{ up.progress }}%</progress>
+                </div>
+
+            </div>
+            <div class="column is-three-quarters" v-if="mode == 3  && useStorage">
+
+                <div class="file has-name">
+                    <label class="file-label">
+                        <input class="file-input" type="file" @change="fileDir" webkitdirectory>
+                        <span class="file-cta">
+                            <span class="file-icon">
+                                <i class="fa fa-upload"></i>
+                            </span>
+                            <span class="file-label">
+                                Download Directory
+                            </span>
+                        </span>
+                        <span class="file-name">
+                            {{filesFolder}}
+                        </span>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="team.js"></script>
+
+</html>

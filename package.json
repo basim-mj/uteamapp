@@ -1,0 +1,26 @@
+{
+  "name": "uteamapp",
+  "version": "0.0.1",
+  "description": "Teams chating and file sharing app",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build-w32": "electron-packager . --asar --icon=icon --overwrite --platform=win32  --arch=ia32 --out=builds",
+    "build-w64": "electron-packager . --asar --icon=icon --overwrite --platform=win32  --arch=x64 --out=builds",
+    "build-d": "electron-packager . --asar --icon=icon --overwrite --platform=darwin  --arch=x64 --out=builds",
+    "pack-w32": "node w32-installer.js"
+  },
+  "author": "Basim Aljohani",
+  "license": "GLP",
+  "dependencies": {
+    "download-file": "^0.1.5",
+    "firebase": "^4.3.1",
+    "lowdb": "^1.0.0",
+    "uuid": "^3.1.0"
+  },
+  "devDependencies": {
+    "electron": "^1.7.6",
+    "electron-packager": "^9.1.0",
+    "electron-winstaller": "^2.6.3"
+  }
+}

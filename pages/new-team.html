@@ -1,0 +1,190 @@
+<html>
+
+<head>
+    <title>UTeam App - New Team</title>
+    <link rel="stylesheet" type="text/css" href="../assets/css/bulma.css">
+</head>
+
+<body>
+    <div id="app">
+        <div class="tabs is-boxed">
+            <ul>
+                <li :class="{'is-active' : currentStep == 0}">
+                    <a>
+                      <span class="icon is-small">
+                        <i class="fa fa-image"></i>
+                      </span>
+                      <span>Team Data</span>
+                    </a>
+                </li>
+                <li :class="{'is-active' : currentStep == 1}">
+                    <a>
+                      <span class="icon is-small">
+                        <i class="fa fa-music"></i>
+                      </span>
+                      <span>Firebase config</span>
+                    </a>
+                </li>
+                <li :class="{'is-active' : currentStep == 2}">
+                    <a>
+                      <span class="icon is-small">
+                        <i class="fa fa-music"></i>
+                      </span>
+                      <span>Team Passport</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div v-if="currentStep == 0">
+            <div class="columns">
+                <div class="column is-half">
+                    <div class="field">
+                        <label class="label">Team Name</label>
+                        <div class="control">
+                            <input class="input" type="text" v-model="teamName">
+                        </div>
+                    </div>
+                </div>
+                <div class="column is-half">
+                    <div class="field">
+                        <label class="label">Team Password</label>
+                        <div class="control">
+                            <input class="input" type="password" v-model="teamPassword">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="columns">
+                <div class="column is-half">
+                    <div class="field">
+                        <div class="control">
+                            <label class="checkbox">
+                          <input type="checkbox" v-model="allowSignup"> Allow Signup
+                        </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="column is-half">
+                    <div class="field">
+                        <div class="control">
+                            <label class="checkbox">
+                          <input type="checkbox" v-model="useStorage"> Use Storage
+                        </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="columns">
+                <div class="column is-half">
+                    <div class="field">
+                        <label class="label">Storage Files List</label>
+                        <div class="control">
+                            <input class="input" type="text" v-model="storageFileList">
+                        </div>
+                    </div>
+                </div>
+                <div class="column is-half">
+                </div>
+            </div>
+        </div>
+
+        <div v-if="currentStep == 1">
+            <div class="columns">
+                <div class="column is-half">
+                    <div class="field">
+                        <label class="label">apiKey</label>
+                        <div class="control">
+                            <input class="input" type="text" v-model="firebaseData.apiKey">
+                        </div>
+                    </div>
+                </div>
+                <div class="column is-half">
+                    <div class="field">
+                        <label class="label">authDomain</label>
+                        <div class="control">
+                            <input class="input" type="text" v-model="firebaseData.authDomain">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="columns">
+                <div class="column is-half">
+                    <div class="field">
+                        <label class="label">databaseURL</label>
+                        <div class="control">
+                            <input class="input" type="text" v-model="firebaseData.databaseURL">
+                        </div>
+                    </div>
+                </div>
+                <div class="column is-half">
+                    <div class="field">
+                        <label class="label">projectId</label>
+                        <div class="control">
+                            <input class="input" type="text" v-model="firebaseData.projectId">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="columns">
+                <div class="column is-half">
+                    <div class="field">
+                        <label class="label">storageBucket</label>
+                        <div class="control">
+                            <input class="input" type="text" v-model="firebaseData.storageBucket">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div v-if="currentStep == 2">
+            <div class="columns">
+                <div class="column is-half">
+                    <div class="field">
+                        <label class="label">Team Password</label> {{teamPassword}}
+                    </div>
+                </div>
+                <div class="column is-half">
+                    <div class="file has-name">
+                        <label class="file-label">
+                            <input class="file-input" type="file" @change="passportDir" webkitdirectory>
+                            <span class="file-cta">
+                                <span class="file-icon">
+                                    <i class="fa fa-upload"></i>
+                                </span>
+                                <span class="file-label">
+                                    Passport File
+                                </span>
+                            </span>
+                            <span class="file-name">
+                                {{passportFolder}}
+                            </span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="columns">
+            <div class="column is-half">
+                <div class="control" v-if="currentStep > 0">
+                    <button class="button is-primary" @click="currentStep--">Back</button>
+                </div>
+            </div>
+            <div class="column is-half">
+                <div class="control" v-if="currentStep < 2">
+                    <button class="button is-primary" @click="currentStep++">Next</button>
+                </div>
+                <div class="control" v-if="currentStep == 2">
+                    <button class="button is-primary" v-if="isDataChecked" @click="createTeam">Create Team</button>
+                    <button class="button is-primary" v-if="isDataChecked == false" @click="checkData">Check Data</button>
+                    <p>{{teamResult}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="new-team.js"></script>
+
+</html>
