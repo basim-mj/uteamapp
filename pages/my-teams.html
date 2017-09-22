@@ -3,6 +3,7 @@
 <head>
     <title>UTeam App - My Teams</title>
     <link rel="stylesheet" type="text/css" href="../assets/css/bulma.css">
+    <link rel="stylesheet" type="text/css" href="../assets/font-awesome/css/font-awesome.min.css">
 </head>
 
 <body>
@@ -12,7 +13,7 @@
                 <li :class="{'is-active' : tab == 0}">
                     <a @click="tab = 0">
                         <span class="icon is-small">
-                            <i class="fa fa-image"></i>
+                            <i class="fa fa-users"></i>
                         </span>
                         <span>My Teams</span>
                     </a>
@@ -20,7 +21,7 @@
                 <li :class="{'is-active' : tab == 1}">
                     <a @click="tab = 1">
                         <span class="icon is-small">
-                            <i class="fa fa-music"></i>
+                            <i class="fa fa-user-plus"></i>
                         </span>
                         <span>Add Team</span>
                     </a>
